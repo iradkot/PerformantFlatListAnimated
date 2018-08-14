@@ -1,36 +1,22 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
+// **
+// * Sample React Native App
+// * https://github.com/facebook/react-native
+// *
+// * @format
+// * @flow
+// */
 import React, {Component} from 'react';
-import {Animated, Dimensions, FlatList, Image, Platform, StyleSheet, Text, TouchableOpacity, View, InteractionManager} from 'react-native';
-import '../config/ReactotronConfig'
+import {Dimensions, FlatList, Image, Platform, StyleSheet, Text, TouchableOpacity, View, Animated} from 'react-native';
 import Reactotron from 'reactotron-react-native'
-import {Transition} from 'react-navigation-fluid-transitions';
-
-
 var fastLoremIpsum = require('fast-lorem-ipsum');
-
 const SH = Dimensions.get('window').height;
 const SW = Dimensions.get('window').width;
 
-const instructions = Platform.select({
-    ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-    android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
 theList = [];
-
 //perf
 const _scrollY = new Animated.Value(0);
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
 let stringsArr = [
     'hello',
     'cake',
@@ -39,9 +25,8 @@ let stringsArr = [
     'this',
     'Hell yea'
 ];
-
 type Props = {};
-export default class App extends Component<Props> {
+export default class HomeScreen extends Component<Props> {
     state = {
         list: [],
         text: '',
@@ -49,23 +34,11 @@ export default class App extends Component<Props> {
         imageScale: 1.0,
     }
     _keyExtractor = (item, index) => index + '';
-
     componentWillMount() {
         this.getPictures()
         // this.setState({list: theList})
     }
-    componentDidMount(){
-        this.on = false;
-        InteractionManager.runAfterInteractions(()=>{
-            setTimeout(()=>{
-                console.warn("now");
-                this.on = true;
-            },2000);
-        })
-    }
-
     getPictures() {
-
         // console.warn(words)
         let cardList = [{empty: true}]
         for (let i = 0; i < 5; i++) {
@@ -78,20 +51,16 @@ export default class App extends Component<Props> {
         cardList.push({empty: true});
         // Reactotron.log('hello rendering world');
         // Reactotron.log({numbers: cardList, boolean: false, nested: {here: 'we go'}})
-
         // console.log('cardList', cardList);
-
         // let text = LoremIpsum();
         this.setState({
             list: cardList
         })
     }
-
     _renderItem(item) {
         if (item.item.empty) {
             return (
                 <View style={{height: SW * 1.05, width: SW * 0.8}}>
-
                 </View>
             )
         }
@@ -99,15 +68,12 @@ export default class App extends Component<Props> {
             <TouchableOpacity style={styles.itemContainer}>
                 <Text style={[styles.welcome, {flex: 1}]}>{item.item.desc}</Text>
                 <View style={{flex: 2}}>
-
                     <Image source={{uri: item.item.image}}
                            style={{width: '100%', height: '100%'}}/>
                 </View>
-
             </TouchableOpacity>
         )
     }
-
     handleScroll(event) {
         let yPosition = event.nativeEvent.contentOffset.y;
         if (yPosition >= 0) {
@@ -127,32 +93,23 @@ export default class App extends Component<Props> {
         }
         Reactotron.log({event: yPosition})
     }
-
     render() {
         return (
             <View style={styles.container}>
-                    {this.on?
-                    <Animated.Image source={{uri: 'https://picsum.photos/100/100?image=56'}}
-                                    style={[{
-                                        width: SW, height: SW * 1.05, position: "absolute",
-                                        backgroundColor: '#b8fa5c',
-                                        opacity: _scrollY.interpolate({
-                                            inputRange: [0, 250],
-                                            outputRange: [1, 0]
-                                        }),
-                                        transform: [{
-                                            scale: _scrollY.interpolate({
-                                                inputRange: [-200, 0, 1],
-                                                outputRange: [1.4, 1, 1]
-                                            })
-                                        }]
-                                    }]}/>:
-                        <Transition shared={'logo'}>
-                            <Image source={{uri:'https://picsum.photos/100/100?image=56'}} style={{width: SW, height: SW * 1.05, position: "absolute",}}/>
-                        </Transition>
-
-
-                    }
+                <Animated.Image source={{uri: 'https://source.unsplash.com/random/750*800'}}
+                                style={[{width: SW, height: SW * 1.05, position: "absolute",
+                                    backgroundColor: '#b8fa5c',
+                                    opacity: _scrollY.interpolate({
+                                        inputRange: [0, 250],
+                                        outputRange: [1, 0]
+                                    }),
+                                    transform : [{
+                                        scale: _scrollY.interpolate({
+                                            inputRange: [-200, 0, 1],
+                                            outputRange: [1.4, 1, 1]
+                                        })
+                                    }]
+                                }]}/>
                 <AnimatedFlatList
                     scrollEventThrottle={16} // <-- Use 1 here to make sure no events are ever missed
                     onScroll={Animated.event(
@@ -169,7 +126,6 @@ export default class App extends Component<Props> {
         );
     }
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

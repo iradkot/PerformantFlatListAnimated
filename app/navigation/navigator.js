@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { Text, View, Button, Image, StyleSheet } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { FluidNavigator, Transition } from 'react-navigation-fluid-transitions';
-import HomeScreen from '../screens/HomeScreen'
+import HomeScreen from '../screens/HomeScreen';
+
+
+
 const LogoImage = (props) => (
-    <Image source={{uri:'https://picsum.photos/100/100?image=56'}} style={props.style}/>
+    <Image source={require("../../assets/gradient_circle.png")} style={props.style}/>
 );
 
 class Screen1 extends React.Component {
     render() {
+
         return (
             <View style={styles.container}>
                 <Transition shared={'logo'}>
@@ -39,16 +43,30 @@ class Screen2 extends React.Component {
                 <Text style={styles.paragraph}>
                     This is the last page of the onboarding.
                 </Text>
-                <Button title="Back" onPress={() => this.props.navigation.goBack()} />
+                <Button title="Back" onPress={() => this.props.navigation.navigate('HomeScreen')} />
             </View>
         );
     }
 }
-
-export default Navigator = FluidNavigator({
+const FLNavigator = FluidNavigator({
     screen1: {screen: Screen1},
-    screen2: {screen: HomeScreen}
+    screen2: {screen: Screen2}
 });
+
+
+export default Navigator = createStackNavigator({
+    FLNavigator: {
+        screen: FLNavigator,
+    },
+    // For each screen that you can navigate to, create a new entry like this:
+    HomeScreen: {
+        screen: HomeScreen,
+
+    },
+});
+
+
+
 
 const styles = StyleSheet.create({
     container: {

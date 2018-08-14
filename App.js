@@ -15,7 +15,6 @@ import Navigator from './app/navigation/navigator';
 
 @observer
 class App extends Component<Props> {
-
     render() {
         return (
             <Provider>
